@@ -321,6 +321,7 @@
 		var callbackContext = origSettings && origSettings.context || requestSettings,
 			newMock = null;
 
+        copyUrlParameters(mockHandler, origSettings);
 
 		// If the response handler on the moock is a function, call it
 		if ( mockHandler.response && $.isFunction(mockHandler.response) ) {

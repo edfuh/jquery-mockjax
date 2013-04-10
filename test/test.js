@@ -405,6 +405,27 @@ asyncTest('RegEx match', 1, function() {
     $.mockjaxClear();
 });
 
+asyncTest('urlParams in jsonp request', 2, function() {
+
+    $.mockjax({
+        url : /^http:\/\/jsonp.com\/([0-9]+)/i,
+        urlParams : ['id'],
+        response : function(settings) {
+            start();
+            notEqual(typeof settings.urlParams, 'undefined', 'urlParams exist')
+            ok(settings.urlParams.id === '123456', 'correct params captured');
+        }
+    });
+
+    $.ajax({
+        url: 'http://jsonp.com/123456',
+        dataType : 'jsonp',
+        error: noErrorCallbackExpected
+    });
+
+    $.mockjaxClear();
+});
+
 module('Request Data Matching');
 asyncTest('Incorrect data matching on request', 1, function() {
     $.mockjax({
